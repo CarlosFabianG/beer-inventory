@@ -16,4 +16,29 @@ public class BeerServiceImpl implements  IBeerService{
     public List<BeerDto> findAll() {
         return (List<BeerDto>) beerRepository.findAll();
     }
+
+    @Override
+    public BeerDto addBeer(BeerDto beer) {
+        return beerRepository.save(beer);
+    }
+
+    @Override
+    public BeerDto updateBeer(long id, BeerDto beer) {
+        return beerRepository.findById(id).map(currentBeer -> {
+            currentBeer.setId(beer.getId());
+            currentBeer.setName(beer.getName());
+            currentBeer.setType(beer.getType());
+            currentBeer.setCountry(beer.getCountry());
+            currentBeer.setQuantity(beer.getQuantity());
+            currentBeer.setMinQuantity(beer.getMinQuantity());
+            return beerRepository.save(currentBeer);
+        }).orElseGet(() -> {
+            return beerRepository.save(beer);
+        });
+    }
+
+    @Override
+    public void deleteBeer(long id) {
+        beerRepository.deleteById(id);
+    }
 }

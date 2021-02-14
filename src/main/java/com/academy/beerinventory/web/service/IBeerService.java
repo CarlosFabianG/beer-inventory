@@ -7,4 +7,10 @@ import java.util.List;
 public interface IBeerService {
 
     public List<BeerDto> findAll();
+
+    public BeerDto addBeer(BeerDto beer);
+
+    public BeerDto updateBeer(long id, BeerDto beer);
+
+    public void deleteBeer(long id);
 }
