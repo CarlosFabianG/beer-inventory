@@ -1,5 +1,6 @@
 package com.academy.beerinventory.web.controller;
 
+import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.service.IBeerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,32 @@ import java.util.List;
 @RequestMapping("/api/v1/beer")
 public class BeerController {
 
-    @Autowired
     private IBeerService beerService;
 
+    public BeerController(IBeerService beerService) {
+        this.beerService = beerService;
+    }
+
     @GetMapping("/")
-    public ResponseEntity <List<BeerDto>> getBeers(){
-        List<BeerDto> beersFromService = beerService.findAll();
-        List<BeerDto> beers = new ArrayList<>();
-        beers.add(new BeerDto((long)1, "Pacifico", "lager", (long)2, (long)1, "MX"));
-        beers.add(new BeerDto((long)2, "Minerva", "stout", (long)3, (long)1, "MX"));
-        beers.add(new BeerDto((long)3, "Victoria", "Viena", (long)6, (long)2, "MX"));
+    public ResponseEntity <List<Beer>> getBeers(){
+        List<Beer> beersFromService = beerService.findAll();
+        List<Beer> beers = new ArrayList<>();
+        beers.add(new Beer(1L, "Pacifico", "lager", 2L, 1L, "MX"));
+        beers.add(new Beer(2L, "Minerva", "stout", 3L, 1L, "MX"));
+        beers.add(new Beer(3L, "Victoria", "Viena", 6L, 2L, "MX"));
 
         return new ResponseEntity<>(beers, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<BeerDto> getBeer(Long id){
+        Beer beer = beerService.findById(id);
+
+        //Todo create mappings BeerDtoToBeer and BeerToBeerDto
+        BeerDto beerDto = new BeerDto();
+
+        return new ResponseEntity<>(beerDto, HttpStatus.OK);
+
     }
 
     @PostMapping("/")
