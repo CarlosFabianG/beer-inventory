@@ -1,30 +1,44 @@
 package com.academy.beerinventory.web.service;
 
+import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.repository.IBeerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BeerServiceImpl implements  IBeerService{
 
-    @Autowired
-    private IBeerRepository beerRepository;
-    @Override
-    public List<BeerDto> findAll() {
-        return (List<BeerDto>) beerRepository.findAll();
+
+    private final IBeerRepository beerRepository;
+
+    public BeerServiceImpl(IBeerRepository beerRepository) {
+        this.beerRepository = beerRepository;
     }
 
     @Override
-    public BeerDto addBeer(BeerDto beer) {
+    public List<Beer> findAll() {
+        return beerRepository.findAll();
+    }
+
+    public Beer findById(Long id){
+        Optional<Beer> beer = beerRepository.findById(id);
+        beer.orElseThrow(()->new RuntimeException("Id not found"));
+        return beer.orElse(null);
+    }
+
+    @Override
+    public Beer addBeer(Beer beer) {
         return beerRepository.save(beer);
     }
 
     @Override
-    public BeerDto updateBeer(long id, BeerDto beer) {
-        return beerRepository.findById(id).map(currentBeer -> {
+    public Beer updateBeer(long id, Beer beer) {
+        beer.setId(id);
+        return beerRepository.save(beer);
+        /*return beerRepository.findById(id).map(currentBeer -> {
             currentBeer.setId(beer.getId());
             currentBeer.setName(beer.getName());
             currentBeer.setType(beer.getType());
@@ -34,7 +48,7 @@ public class BeerServiceImpl implements  IBeerService{
             return beerRepository.save(currentBeer);
         }).orElseGet(() -> {
             return beerRepository.save(beer);
-        });
+        });*/
     }
 
     @Override
