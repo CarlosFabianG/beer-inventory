@@ -1,21 +1,11 @@
 package com.academy.beerinventory.web.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+public class BeerDto {
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity
-@Table(name="beers")
-public class BeerDto implements Serializable {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     private String name;
     private String type;
     private Long quantity;
-    @Column(name = "min_quantity")
     private Long minQuantity;
     private String country;
 
@@ -28,8 +18,7 @@ public class BeerDto implements Serializable {
         this.country = country;
     }
 
-    public BeerDto() {
-    }
+    public BeerDto() { }
 
     public String getName() {
         return name;
