@@ -30,6 +30,17 @@ public class BeerController {
         return new ResponseEntity<>(beers, HttpStatus.OK);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<BeerDto> getBeer(Long id){
+        Beer beer = beerService.findById(id);
+
+        //Todo create mappings BeerDtoToBeer and BeerToBeerDto
+        BeerDto beerDto = new BeerDto();
+
+        return new ResponseEntity<>(beerDto, HttpStatus.OK);
+
+    }
+
     @PostMapping("/")
     public ResponseEntity<BeerDto> getBeer(Long id){
         Beer beer = beerService.findById(id);

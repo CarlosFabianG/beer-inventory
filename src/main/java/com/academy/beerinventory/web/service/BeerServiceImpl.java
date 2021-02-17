@@ -17,9 +17,22 @@ public class BeerServiceImpl implements IBeerService{
         this.beerRepository = beerRepository;
     }
 
+
+    private final IBeerRepository beerRepository;
+
+    public BeerServiceImpl(IBeerRepository beerRepository) {
+        this.beerRepository = beerRepository;
+    }
+
     @Override
     public List<Beer> findAll() {
-        return (List<Beer>) beerRepository.findAll();
+        return beerRepository.findAll();
+    }
+
+    public Beer findById(Long id){
+        Optional<Beer> beer = beerRepository.findById(id);
+        beer.orElseThrow(()->new RuntimeException("Id not found"));
+        return beer.orElse(null);
     }
 
     @Override

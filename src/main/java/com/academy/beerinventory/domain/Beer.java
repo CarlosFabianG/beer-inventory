@@ -1,8 +1,7 @@
 package com.academy.beerinventory.domain;
 
-import com.academy.beerinventory.web.model.BeerDto;
-
 public class Beer {
+
     private Long id;
     private String name;
     private String type;
@@ -21,6 +20,14 @@ public class Beer {
         this.quantity = quantity;
         this.minQuantity = minQuantity;
         this.country = country;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -61,13 +68,5 @@ public class Beer {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
