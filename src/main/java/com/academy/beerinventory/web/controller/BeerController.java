@@ -1,6 +1,7 @@
 package com.academy.beerinventory.web.controller;
 
 import com.academy.beerinventory.domain.Beer;
+import com.academy.beerinventory.mappers.BeerMapping;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.service.IBeerService;
 import org.springframework.http.HttpStatus;
@@ -21,43 +22,30 @@ public class BeerController {
     }
 
     @GetMapping("/")
-    public ResponseEntity <List<Beer>> getBeers(){
-        List<Beer> beersFromService = beerService.findAll();
+    public ResponseEntity <List<BeerDto>> getBeers(){
+        List<BeerDto> beersFromService = beerService.findAll();
         List<Beer> beers = new ArrayList<>();
         beers.add(new Beer(1L, "Pacifico", "lager", 2L, 1L, "MX"));
         beers.add(new Beer(2L, "Minerva", "stout", 3L, 1L, "MX"));
         beers.add(new Beer(3L, "Victoria", "Viena", 6L, 2L, "MX"));
-        return new ResponseEntity<>(beers, HttpStatus.OK);
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<BeerDto> getBeer(Long id){
-        Beer beer = beerService.findById(id);
-
-        //Todo create mappings BeerDtoToBeer and BeerToBeerDto
-        BeerDto beerDto = new BeerDto();
-
-        return new ResponseEntity<>(beerDto, HttpStatus.OK);
-
+        return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity<BeerDto> getBeer(Long id){
-        Beer beer = beerService.findById(id);
-        // Todo create mappings BeerDtoToBeer and BeerToBeerDto
-        BeerDto beerDto = new BeerDto();
+        BeerDto beerDto = beerService.findById(id);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Beer> addBeer(@RequestBody Beer beer) {
-        Beer beerCreated = beerService.addBeer(beer);
+    public ResponseEntity<BeerDto> addBeer(@RequestBody Beer beer) {
+        BeerDto beerCreated = beerService.addBeer(beer);
         return new ResponseEntity<>(beerCreated, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Beer> updateBeer(@PathVariable long id, @RequestBody Beer beer) {
-        Beer beerUpdated = beerService.updateBeer(id, beer);
+    public ResponseEntity<BeerDto> updateBeer(@PathVariable long id, @RequestBody Beer beer) {
+        BeerDto beerUpdated = beerService.updateBeer(id, beer);
         return new ResponseEntity<>(beerUpdated, HttpStatus.ACCEPTED);
     }
 

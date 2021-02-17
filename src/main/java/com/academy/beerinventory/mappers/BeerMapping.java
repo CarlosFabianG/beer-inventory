@@ -3,11 +3,12 @@ package com.academy.beerinventory.mappers;
 import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.model.BeerDto;
 
+import java.util.Optional;
+
 public class BeerMapping {
 
     public static Beer BeerDtoToBeer(BeerDto beerDto){
         Beer beer = new Beer();
-
         beer.setId(beerDto.getId());
         beer.setName(beerDto.getName());
         beer.setQuantity(beerDto.getQuantity());
