@@ -3,7 +3,6 @@ package com.academy.beerinventory.domain;
 public class Beer {
 
     private Long id;
-
     private String name;
     private String type;
     private Long quantity;

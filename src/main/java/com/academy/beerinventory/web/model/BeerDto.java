@@ -3,7 +3,6 @@ package com.academy.beerinventory.web.model;
 public class BeerDto {
 
     private Long id;
-
     private String name;
     private String type;
     private Long quantity;
@@ -19,8 +18,7 @@ public class BeerDto {
         this.country = country;
     }
 
-    public BeerDto() {
-    }
+    public BeerDto() { }
 
     public String getName() {
         return name;

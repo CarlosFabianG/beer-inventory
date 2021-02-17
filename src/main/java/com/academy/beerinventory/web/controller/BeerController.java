@@ -3,7 +3,6 @@ package com.academy.beerinventory.web.controller;
 import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.service.IBeerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,6 @@ public class BeerController {
         beers.add(new Beer(1L, "Pacifico", "lager", 2L, 1L, "MX"));
         beers.add(new Beer(2L, "Minerva", "stout", 3L, 1L, "MX"));
         beers.add(new Beer(3L, "Victoria", "Viena", 6L, 2L, "MX"));
-
         return new ResponseEntity<>(beers, HttpStatus.OK);
     }
 
@@ -44,14 +42,22 @@ public class BeerController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<BeerDto> addBeer(@RequestBody BeerDto beer) {
-        BeerDto beerCreated = beerService.addBeer(beer);
+    public ResponseEntity<BeerDto> getBeer(Long id){
+        Beer beer = beerService.findById(id);
+        // Todo create mappings BeerDtoToBeer and BeerToBeerDto
+        BeerDto beerDto = new BeerDto();
+        return new ResponseEntity<>(beerDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Beer> addBeer(@RequestBody Beer beer) {
+        Beer beerCreated = beerService.addBeer(beer);
         return new ResponseEntity<>(beerCreated, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BeerDto> updateBeer(@PathVariable long id, @RequestBody BeerDto beer) {
-        BeerDto beerUpdated = beerService.updateBeer(id, beer);
+    public ResponseEntity<Beer> updateBeer(@PathVariable long id, @RequestBody Beer beer) {
+        Beer beerUpdated = beerService.updateBeer(id, beer);
         return new ResponseEntity<>(beerUpdated, HttpStatus.ACCEPTED);
     }
 

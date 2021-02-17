@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BeerServiceImpl implements  IBeerService{
+public class BeerServiceImpl implements IBeerService{
+
+    private final IBeerRepository beerRepository;
+
+    public BeerServiceImpl(IBeerRepository beerRepository) {
+        this.beerRepository = beerRepository;
+    }
 
 
     private final IBeerRepository beerRepository;
@@ -49,10 +55,19 @@ public class BeerServiceImpl implements  IBeerService{
         }).orElseGet(() -> {
             return beerRepository.save(beer);
         });*/
+
     }
 
     @Override
     public void deleteBeer(long id) {
         beerRepository.deleteById(id);
     }
+
+    @Override
+    public Beer findById(long id) {
+        Optional<Beer> beer = beerRepository.findById(id);
+        beer.orElseThrow(()-> new RuntimeException("ID Not found"));
+        return beer.orElse(null);
+    }
+
 }
