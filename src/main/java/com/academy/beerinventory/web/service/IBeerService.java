@@ -11,9 +11,9 @@ public interface IBeerService {
 
     public BeerDto findById(Long id);
 
-    public BeerDto addBeer(Beer beer);
+    public BeerDto addBeer(BeerDto beer);
 
-    public BeerDto updateBeer(long id, Beer beer);
+    public BeerDto updateBeer(long id, BeerDto beer);
 
     public void deleteBeer(long id);
 }

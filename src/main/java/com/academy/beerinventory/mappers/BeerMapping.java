@@ -3,8 +3,6 @@ package com.academy.beerinventory.mappers;
 import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.model.BeerDto;
 
-import java.util.Optional;
-
 public class BeerMapping {
 
     public static Beer BeerDtoToBeer(BeerDto beerDto){

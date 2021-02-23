@@ -1,7 +1,6 @@
 package com.academy.beerinventory.web.controller;
 
 import com.academy.beerinventory.domain.Beer;
-import com.academy.beerinventory.mappers.BeerMapping;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.service.IBeerService;
 import org.springframework.http.HttpStatus;
@@ -31,20 +30,20 @@ public class BeerController {
         return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @GetMapping("/")
     public ResponseEntity<BeerDto> getBeer(Long id){
         BeerDto beerDto = beerService.findById(id);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<BeerDto> addBeer(@RequestBody Beer beer) {
+    public ResponseEntity<BeerDto> addBeer(@RequestBody BeerDto beer) {
         BeerDto beerCreated = beerService.addBeer(beer);
         return new ResponseEntity<>(beerCreated, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BeerDto> updateBeer(@PathVariable long id, @RequestBody Beer beer) {
+    public ResponseEntity<BeerDto> updateBeer(@PathVariable long id, @RequestBody BeerDto beer) {
         BeerDto beerUpdated = beerService.updateBeer(id, beer);
         return new ResponseEntity<>(beerUpdated, HttpStatus.ACCEPTED);
     }

@@ -27,21 +27,23 @@ public class BeerServiceImpl implements IBeerService{
 
     public BeerDto findById(Long id){
         Optional<Beer> beer = beerRepository.findById(id);
-        beer.orElseThrow(()->new RuntimeException("Id not found"));
-        BeerDto beerDto = BeerMapping.BeerToBeerDto(beer.orElse(null));
+        Beer beerResponse = beer.orElseThrow(()->new RuntimeException("Id not found"));
+        BeerDto beerDto = BeerMapping.BeerToBeerDto(beerResponse);
         return beerDto;
     }
 
     @Override
-    public BeerDto addBeer(Beer beer) {
-        Beer beerSaved = beerRepository.save(beer);
+    public BeerDto addBeer(BeerDto beer) {
+        Beer beerBeer = BeerMapping.BeerDtoToBeer(beer);
+        Beer beerSaved = beerRepository.save(beerBeer);
         return BeerMapping.BeerToBeerDto(beerSaved);
     }
 
     @Override
-    public BeerDto updateBeer(long id, Beer beer) {
+    public BeerDto updateBeer(long id, BeerDto beer) {
         beer.setId(id);
-        Beer beerSaved = beerRepository.save(beer);
+        Beer beerFromBeerDto = BeerMapping.BeerDtoToBeer(beer);
+        Beer beerSaved = beerRepository.save(beerFromBeerDto);
         BeerDto beerUpdated = BeerMapping.BeerToBeerDto(beerSaved);
         return beerUpdated;
     }
