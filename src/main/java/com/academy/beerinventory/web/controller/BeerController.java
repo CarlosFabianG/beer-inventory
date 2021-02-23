@@ -31,7 +31,7 @@ public class BeerController {
     }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeer(Long id){
+    public ResponseEntity<BeerDto> getBeer(@PathVariable Long beerId){
         BeerDto beerDto = beerService.findById(id);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
