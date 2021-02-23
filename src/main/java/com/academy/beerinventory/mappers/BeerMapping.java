@@ -7,7 +7,6 @@ public class BeerMapping {
 
     public static Beer BeerDtoToBeer(BeerDto beerDto){
         Beer beer = new Beer();
-
         beer.setId(beerDto.getId());
         beer.setName(beerDto.getName());
         beer.setQuantity(beerDto.getQuantity());

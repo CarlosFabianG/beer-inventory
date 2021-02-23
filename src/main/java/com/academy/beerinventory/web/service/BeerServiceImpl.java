@@ -1,6 +1,7 @@
 package com.academy.beerinventory.web.service;
 
 import com.academy.beerinventory.domain.Beer;
+import com.academy.beerinventory.mappers.BeerMapping;
 import com.academy.beerinventory.web.model.BeerDto;
 import com.academy.beerinventory.web.repository.IBeerRepository;
 import org.springframework.stereotype.Service;
@@ -17,57 +18,39 @@ public class BeerServiceImpl implements IBeerService{
         this.beerRepository = beerRepository;
     }
 
-
-    private final IBeerRepository beerRepository;
-
-    public BeerServiceImpl(IBeerRepository beerRepository) {
-        this.beerRepository = beerRepository;
-    }
-
     @Override
-    public List<Beer> findAll() {
-        return beerRepository.findAll();
+    public List<BeerDto> findAll() {
+        List<Beer> allBeers = beerRepository.findAll();
+        List<BeerDto> allBeersDto = (List<BeerDto>) allBeers.stream().map(beer -> BeerMapping.BeerToBeerDto(beer));
+        return allBeersDto;
     }
 
-    public Beer findById(Long id){
+    public BeerDto findById(Long id){
         Optional<Beer> beer = beerRepository.findById(id);
-        beer.orElseThrow(()->new RuntimeException("Id not found"));
-        return beer.orElse(null);
+        Beer beerResponse = beer.orElseThrow(()->new RuntimeException("Id not found"));
+        BeerDto beerDto = BeerMapping.BeerToBeerDto(beerResponse);
+        return beerDto;
     }
 
     @Override
-    public Beer addBeer(Beer beer) {
-        return beerRepository.save(beer);
+    public BeerDto addBeer(BeerDto beer) {
+        Beer beerBeer = BeerMapping.BeerDtoToBeer(beer);
+        Beer beerSaved = beerRepository.save(beerBeer);
+        return BeerMapping.BeerToBeerDto(beerSaved);
     }
 
     @Override
-    public Beer updateBeer(long id, Beer beer) {
+    public BeerDto updateBeer(long id, BeerDto beer) {
         beer.setId(id);
-        return beerRepository.save(beer);
-        /*return beerRepository.findById(id).map(currentBeer -> {
-            currentBeer.setId(beer.getId());
-            currentBeer.setName(beer.getName());
-            currentBeer.setType(beer.getType());
-            currentBeer.setCountry(beer.getCountry());
-            currentBeer.setQuantity(beer.getQuantity());
-            currentBeer.setMinQuantity(beer.getMinQuantity());
-            return beerRepository.save(currentBeer);
-        }).orElseGet(() -> {
-            return beerRepository.save(beer);
-        });*/
-
+        Beer beerFromBeerDto = BeerMapping.BeerDtoToBeer(beer);
+        Beer beerSaved = beerRepository.save(beerFromBeerDto);
+        BeerDto beerUpdated = BeerMapping.BeerToBeerDto(beerSaved);
+        return beerUpdated;
     }
 
     @Override
     public void deleteBeer(long id) {
         beerRepository.deleteById(id);
-    }
-
-    @Override
-    public Beer findById(long id) {
-        Optional<Beer> beer = beerRepository.findById(id);
-        beer.orElseThrow(()-> new RuntimeException("ID Not found"));
-        return beer.orElse(null);
     }
 
 }
