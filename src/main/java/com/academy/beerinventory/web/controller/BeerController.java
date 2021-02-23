@@ -30,7 +30,7 @@ public class BeerController {
         return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeer(Long id){
         BeerDto beerDto = beerService.findById(id);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
