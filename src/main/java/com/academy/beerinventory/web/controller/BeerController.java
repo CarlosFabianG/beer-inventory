@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,10 +22,11 @@ public class BeerController {
     @GetMapping("/")
     public ResponseEntity <List<BeerDto>> getBeers(){
         List<BeerDto> beersFromService = beerService.findAll();
-        List<Beer> beers = new ArrayList<>();
+        /*List<Beer> beers = new ArrayList<>();
         beers.add(new Beer(1L, "Pacifico", "lager", 2L, 1L, "MX"));
         beers.add(new Beer(2L, "Minerva", "stout", 3L, 1L, "MX"));
         beers.add(new Beer(3L, "Victoria", "Viena", 6L, 2L, "MX"));
+        */
         return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
