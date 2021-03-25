@@ -3,6 +3,8 @@ package com.academy.beerinventory.bootstrap;
 import com.academy.beerinventory.domain.Beer;
 import com.academy.beerinventory.web.repository.IBeerRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 /*
 command line runner is used to run beans using the CommandeLineRunner interface
 
@@ -16,6 +18,7 @@ https://github.com/OmarMorales71/mssc-beer-service/blob/master/src/main/java/oma
 
 
  */
+@Component
 public class BeerLoader implements CommandLineRunner {
 
     private final IBeerRepository beerRepository;
