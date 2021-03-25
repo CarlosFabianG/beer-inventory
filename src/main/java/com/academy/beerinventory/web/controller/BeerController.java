@@ -22,11 +22,6 @@ public class BeerController {
     @GetMapping("/")
     public ResponseEntity <List<BeerDto>> getBeers(){
         List<BeerDto> beersFromService = beerService.findAll();
-        /*List<Beer> beers = new ArrayList<>();
-        beers.add(new Beer(1L, "Pacifico", "lager", 2L, 1L, "MX"));
-        beers.add(new Beer(2L, "Minerva", "stout", 3L, 1L, "MX"));
-        beers.add(new Beer(3L, "Victoria", "Viena", 6L, 2L, "MX"));
-        */
         return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
