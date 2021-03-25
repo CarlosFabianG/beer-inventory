@@ -30,9 +30,9 @@ public class BeerController {
         return new ResponseEntity<List<BeerDto>>(beersFromService, HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<BeerDto> getBeer(Long id){
-        BeerDto beerDto = beerService.findById(id);
+    @GetMapping("/{beerId}")
+    public ResponseEntity<BeerDto> getBeer(@PathVariable Long beerId){
+        BeerDto beerDto = beerService.findById(beerId);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 
