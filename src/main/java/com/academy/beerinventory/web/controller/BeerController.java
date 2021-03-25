@@ -32,7 +32,7 @@ public class BeerController {
 
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeer(@PathVariable Long beerId){
-        BeerDto beerDto = beerService.findById(id);
+        BeerDto beerDto = beerService.findById(beerId);
         return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 
