@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BeerServiceImpl implements IBeerService{
@@ -21,7 +22,7 @@ public class BeerServiceImpl implements IBeerService{
     @Override
     public List<BeerDto> findAll() {
         List<Beer> allBeers = beerRepository.findAll();
-        List<BeerDto> allBeersDto = (List<BeerDto>) allBeers.stream().map(beer -> BeerMapping.BeerToBeerDto(beer));
+        List<BeerDto> allBeersDto = allBeers.stream().map(beer -> BeerMapping.BeerToBeerDto(beer)).collect(Collectors.toList());
         return allBeersDto;
     }
 
